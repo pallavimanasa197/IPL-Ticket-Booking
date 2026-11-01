@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IPL Ticket Booking</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #061b49, #1769aa);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #071b3c;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            width: 400px;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: #063b79;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 7px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background: #ff6b00;
+            color: white;
+            padding: 12px;
+            border: none;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #d94f00;
+        }
+
+        #result {
+            text-align: center;
+            color: green;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏏 IPL TICKET BOOKING</h1>
+    <p>Book Your Favourite IPL Match!</p>
+</header>
+
+<div class="container">
+
+    <h2>Book Your Tickets</h2>
+
+    <form id="bookingForm">
+
+        <label>Customer Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <label>Select IPL Team</label>
+        <select id="team" required>
+            <option value="">Choose Team</option>
+            <option>Chennai Super Kings</option>
+            <option>Mumbai Indians</option>
+            <option>Royal Challengers Bengaluru</option>
+            <option>Kolkata Knight Riders</option>
+            <option>Sunrisers Hyderabad</option>
+            <option>Rajasthan Royals</option>
+            <option>Delhi Capitals</option>
+            <option>Punjab Kings</option>
+            <option>Gujarat Titans</option>
+            <option>Lucknow Super Giants</option>
+        </select>
+
+        <label>Select Match</label>
+        <select id="match" required>
+            <option value="">Choose Match</option>
+            <option>CSK vs MI</option>
+            <option>RCB vs KKR</option>
+            <option>SRH vs RR</option>
+            <option>DC vs PBKS</option>
+            <option>GT vs LSG</option>
+        </select>
+
+        <label>Select Stadium</label>
+        <select id="stadium" required>
+            <option value="">Choose Stadium</option>
+            <option>M. Chinnaswamy Stadium</option>
+            <option>Wankhede Stadium</option>
+            <option>Chepauk Stadium</option>
+            <option>Eden Gardens</option>
+            <option>Rajiv Gandhi Stadium</option>
+        </select>
+
+        <label>Ticket Category</label>
+        <select id="category" required>
+            <option value="500">General - ₹500</option>
+            <option value="1000">Premium - ₹1000</option>
+            <option value="2000">VIP - ₹2000</option>
+        </select>
+
+        <label>Number of Tickets</label>
+        <input type="number" id="quantity" min="1" max="10" value="1" required>
+
+        <button type="button" onclick="calculatePrice()">
+            Calculate Price
+        </button>
+
+        <h3 id="price">Total Price: ₹500</h3>
+
+        <button type="submit">Book Ticket</button>
+
+    </form>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+    function calculatePrice() {
+
+        let category = Number(document.getElementById("category").value);
+
+        let quantity = Number(document.getElementById("quantity").value);
+
+        if (quantity < 1 || quantity > 10 || !Number.isInteger(quantity)) {
+            alert("Please enter between 1 and 10 tickets.");
+            return;
+        }
+
+        let total = category * quantity;
+
+        document.getElementById("price").innerHTML =
+            "Total Price: ₹" + total;
+    }
+
+    document.getElementById("bookingForm").addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        let name = document.getElementById("name").value;
+        let team = document.getElementById("team").value;
+        let match = document.getElementById("match").value;
+        let stadium = document.getElementById("stadium").value;
+        let category = Number(document.getElementById("category").value);
+        let quantity = Number(document.getElementById("quantity").value);
+
+        if (quantity < 1 || quantity > 10 || !Number.isInteger(quantity)) {
+            alert("Please enter between 1 and 10 tickets.");
+            return;
+        }
+
+        let total = category * quantity;
+
+        document.getElementById("result").innerHTML =
+            "<h3>🎉 Booking Successful!</h3>" +
+            "Name: " + name + "<br>" +
+            "Team: " + team + "<br>" +
+            "Match: " + match + "<br>" +
+            "Stadium: " + stadium + "<br>" +
+            "Tickets: " + quantity + "<br>" +
+            "Total Amount: ₹" + total;
+
+    });
+
+</script>
+
+</body>
+</html>
