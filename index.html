@@ -18,19 +18,23 @@
 <header>
     <nav class="navbar">
 
-        <a href="index.html" class="logo">
-            IPL<span>Tickets</span>
-        </a>
+    <a href="index.html" class="logo">
+        IPL<span>Tickets</span>
+    </a>
 
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#matches">Matches</a></li>
-            <li><a href="booking.html" class="book-btn">Book Now</a></li>
-            <li><a href="#my-bookings">My Bookings</a></li>
-            <li><a href="#guidelines">Guidelines</a></li>
-        </ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+        ☰
+    </button>
 
-    </nav>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#matches">Matches</a></li>
+        <li><a href="booking.html" class="book-btn">Book Now</a></li>
+        <li><a href="#my-bookings">My Bookings</a></li>
+        <li><a href="#guidelines">Guidelines</a></li>
+    </ul>
+
+</nav>
 </header>
 
 
@@ -136,9 +140,55 @@
     </div>
 
 
-    <div class="table-wrap">
+<div class="view-controls">
+    <button id="gridView" class="active">Grid View</button>
+    <button id="listView">List View</button>
+</div>
 
-        <table>
+<div class="match-grid" id="matchContainer">
+
+    <div class="match-card" data-team="CSK MI">
+        <h3>CSK vs MI</h3>
+        <p>📅 28 Mar 2026 | 7:30 PM</p>
+        <p>📍 Chennai</p>
+        <p>General: ₹1,500</p>
+        <p>Premium: ₹3,500</p>
+        <p>VIP: ₹7,500</p>
+        <a href="booking.html" class="btn btn-sm">Book Now</a>
+    </div>
+
+    <div class="match-card" data-team="RCB KKR">
+        <h3>RCB vs KKR</h3>
+        <p>📅 30 Mar 2026 | 7:30 PM</p>
+        <p>📍 Bengaluru</p>
+        <p>General: ₹1,800</p>
+        <p>Premium: ₹4,000</p>
+        <p>VIP: ₹8,000</p>
+        <a href="booking.html" class="btn btn-sm">Book Now</a>
+    </div>
+
+    <div class="match-card" data-team="SRH MI">
+        <h3>SRH vs MI</h3>
+        <p>📅 02 Apr 2026 | 3:30 PM</p>
+        <p>📍 Hyderabad</p>
+        <p>General: ₹1,400</p>
+        <p>Premium: ₹3,200</p>
+        <p>VIP: ₹7,000</p>
+        <a href="booking.html" class="btn btn-sm">Book Now</a>
+    </div>
+
+    <div class="match-card" data-team="KKR CSK">
+        <h3>KKR vs CSK</h3>
+        <p>📅 05 Apr 2026 | 7:30 PM</p>
+        <p>📍 Kolkata</p>
+        <p>General: ₹1,600</p>
+        <p>Premium: ₹3,800</p>
+        <p>VIP: ₹7,800</p>
+        <a href="booking.html" class="btn btn-sm">Book Now</a>
+    </div>
+
+</div>
+
 
             <caption class="sr-only">
                 IPL 2026 Match Schedule

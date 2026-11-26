@@ -117,3 +117,86 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
+// ACTIVITY 8: RESPONSIVE LAYOUT
+
+// 1. GRID AND LIST VIEW
+const matchContainer = document.getElementById("matchContainer");
+const gridViewBtn = document.getElementById("gridView");
+const listViewBtn = document.getElementById("listView");
+
+if (matchContainer && gridViewBtn && listViewBtn) {
+
+    gridViewBtn.addEventListener("click", function () {
+        matchContainer.classList.remove("list-view");
+
+        gridViewBtn.classList.add("active");
+        listViewBtn.classList.remove("active");
+    });
+
+    listViewBtn.addEventListener("click", function () {
+        matchContainer.classList.add("list-view");
+
+        listViewBtn.classList.add("active");
+        gridViewBtn.classList.remove("active");
+    });
+}
+
+
+// 2. TEAM FILTER
+const teamFilter = document.getElementById("teamFilter");
+
+if (teamFilter && matchContainer) {
+
+    teamFilter.addEventListener("change", function () {
+
+        const selectedTeam = this.value;
+        const matchCards = document.querySelectorAll(".match-card");
+
+        matchCards.forEach(function (card) {
+
+            const teams = card.dataset.team;
+
+            if (
+                selectedTeam === "all" ||
+                teams.includes(selectedTeam)
+            ) {
+                card.style.display = "";
+            } else {
+                card.style.display = "none";
+            }
+
+        });
+
+    });
+}
+
+
+// 3. HAMBURGER MENU
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+if (menuToggle && navLinks) {
+
+    menuToggle.addEventListener("click", function () {
+
+        navLinks.classList.toggle("active");
+
+        const isOpen = navLinks.classList.contains("active");
+        menuToggle.setAttribute("aria-expanded", isOpen);
+
+        menuToggle.textContent = isOpen ? "✕" : "☰";
+
+    });
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+
+        link.addEventListener("click", function () {
+            navLinks.classList.remove("active");
+            menuToggle.textContent = "☰";
+            menuToggle.setAttribute("aria-expanded", "false");
+        });
+
+    });
+
+}
