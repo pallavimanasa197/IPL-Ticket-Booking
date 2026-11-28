@@ -1,14 +1,33 @@
 
-function Navbar() {
+function Navbar({ onNavigate }) {
   return (
     <nav className="navbar">
       <h2>🏏 IPL TICKET BOOKING</h2>
 
       <ul>
-        <li>Home</li>
-        <li>Matches</li>
-        <li>Book Tickets</li>
-        <li>My Bookings</li>
+        <li>
+          <button onClick={() => onNavigate("home")}>
+            Home
+          </button>
+        </li>
+
+        <li>
+          <button onClick={() => onNavigate("home")}>
+            Matches
+          </button>
+        </li>
+
+        <li>
+          <button onClick={() => onNavigate("home")}>
+            Book Tickets
+          </button>
+        </li>
+
+        <li>
+          <button onClick={() => onNavigate("bookings")}>
+            My Bookings
+          </button>
+        </li>
       </ul>
     </nav>
   );

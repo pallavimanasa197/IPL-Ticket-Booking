@@ -1,61 +1,92 @@
+
+import { useState, useEffect } from "react";
 import "./App.css";
+
+import { supabase } from "./supabase";
+
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import MatchCard from "./components/MatchCard";
+import MyBookings from "./components/MyBookings";
 
 function App() {
+  const [matches, setMatches] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [activePage, setActivePage] = useState("home");
 
-  const matches = [
-    {
-      id: 1,
-      team1: "CSK",
-      team2: "MI",
-      date: "10 December 2026",
-      venue: "Chinnaswamy Stadium"
-    },
-    {
-      id: 2,
-      team1: "RCB",
-      team2: "KKR",
-      date: "12 December 2026",
-      venue: "Eden Gardens"
-    },
-    {
-      id: 3,
-      team1: "SRH",
-      team2: "CSK",
-      date: "15 December 2026",
-      venue: "Rajiv Gandhi Stadium"
-    },
-    {
-      id: 4,
-      team1: "MI",
-      team2: "RCB",
-      date: "18 December 2026",
-      venue: "Wankhede Stadium"
-    }
-  ];
+  useEffect(() => {
+    const fetchMatches = async () => {
+      const { data, error } = await supabase
+        .from("matches")
+        .select("*");
+
+      if (error) {
+        setError(error.message);
+      } else {
+        setMatches(data || []);
+        setError("");
+      }
+
+      setLoading(false);
+    };
+
+    fetchMatches();
+
+    const channel = supabase
+      .channel("matches-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "matches",
+        },
+        () => {
+          fetchMatches();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   return (
     <>
-      <Navbar />
-      <Hero />
+      <Navbar onNavigate={setActivePage} />
 
-      <h2>Upcoming IPL Matches 🏏</h2>
+      {activePage === "home" && (
+        <>
+          <Hero />
 
-      <div className="match-container">
+          <h2 id="matches">Upcoming IPL Matches 🏏</h2>
 
-        {matches.map((match) => (
-          <MatchCard
-            key={match.id}
-            team1={match.team1}
-            team2={match.team2}
-            date={match.date}
-            venue={match.venue}
-          />
-        ))}
+          {loading && <p>Loading matches...</p>}
 
-      </div>
+          {error && <p>Error: {error}</p>}
+
+          {!loading && !error && (
+            <div className="match-container">
+              {matches.map((match) => (
+                <MatchCard
+                  key={match.id}
+                  matchId={match.id}
+                  team1={match.team1}
+                  team2={match.team2}
+                  date={match.date}
+                  price={match.price}
+                  venue={match.venue}
+                  availableSeats={match.available_seats}
+                />
+              ))}
+            </div>
+          )}
+        </>
+      )}
+
+      {activePage === "bookings" && <MyBookings />}
     </>
   );
 }
